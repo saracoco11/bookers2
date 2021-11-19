@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :balia_user, only: [:edit, :update]
+  
   def index
     @user = User.new
     @users = User.all
+    @book = Book.new
   end
   
   def show
@@ -27,7 +31,6 @@ class UsersController < ApplicationController
      flash[:notice] = "You have updated user successfully." 
      redirect_to user_path(@user.id)  
     else
-      @users = User.all
       render :edit
     end  
   end
@@ -35,6 +38,12 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :introduction, :image)
+  end
+  
+  def balia_user
+    unless params[:id].to_i == current_user.id
+      redirect_to user_path(current_user)
+    end
   end
 end
