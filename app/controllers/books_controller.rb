@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!
-
+  before_action :current_user, only: [:edit, :update]
   def new
     @book = Book.new
   end
@@ -53,5 +53,17 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
+  
+  def current_user
+    @book = Book.find(params[:id])
+    # まず本を取り出した 重要
+    @user = @book.user
+    # 本に結びついたユーザーを取り出す
+    if current_user != @user
+      redirect_to books_path
+    # 正しいユーザーではない場合本一覧に戻す
+    end
+  end
+
 
 end
