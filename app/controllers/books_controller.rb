@@ -19,21 +19,23 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
     @book = Book.new
+    @books = Book.all
     @user = current_user
     @favorite = Favorite.new
-    #@favorite_count = Favorite.where(book_id: @book.id).count
+    @book_comments = @book.book_comments
+    @comment = BookComment.new
   end
 
   def show
     @book = Book.find(params[:id])
-    @books = Book.new
+   
     @user = @book.user
     @favorite = Favorite.new
     @favorite_count = Favorite.where(book_id: @book.id).count
     @book_comments = @book.book_comments
     @comment = BookComment.new
+    
   end
 
   def edit
