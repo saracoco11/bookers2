@@ -22,12 +22,18 @@ class BooksController < ApplicationController
     @books = Book.all
     @book = Book.new
     @user = current_user
+    @favorite = Favorite.new
+    #@favorite_count = Favorite.where(book_id: @book.id).count
   end
 
   def show
     @book = Book.find(params[:id])
     @books = Book.new
     @user = @book.user
+    @favorite = Favorite.new
+    @favorite_count = Favorite.where(book_id: @book.id).count
+    @book_comments = @book.book_comments
+    @comment = BookComment.new
   end
 
   def edit
@@ -54,15 +60,12 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
-  
+
   def currect_user
     @book = Book.find(params[:id])
-    # まず本を取り出した 重要
     @user = @book.user
-    # 本に結びついたユーザーを取り出す
     if current_user != @user
       redirect_to books_path
-    # 正しいユーザーではない場合本一覧に戻す
     end
   end
 

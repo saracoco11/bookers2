@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     @user = User.new
     @users = User.all
     @book = Book.new
+    @favorite = Favorite
   end
 
   def show
