@@ -5,7 +5,7 @@
   <% end %>
 <% end %>
 <div class="container px-5 px-sm-0">
-  <%= render 'share/sidebar', user: current_user, book: @book %>
+  <%= render 'share/sidebar', user: @user, book: @book %>
   <div class="col-md-8 offset-md-1">
     <h2>Books</h2>
 
@@ -34,7 +34,7 @@
                 <%= link_to book.favorites.count, book_favorites_path(book_id: book.id), method: :post, class: "fas fa-heart favorite-btn" %>
               <% end %>
             </td>
-            <td>コメント数: <%= @book_comments.count %></td>
+            <td>コメント数: <%= book.book_comments.count %></td>
           </tr>
         <% end %>
       </tbody>

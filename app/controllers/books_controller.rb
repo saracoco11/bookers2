@@ -8,6 +8,7 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
+    @user = current_user
     @books = Book.all
     if @book.save
      flash[:notice] = "You have created book successfully."
@@ -20,16 +21,15 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.new
+    
     @books = Book.all
     @user = current_user
     @favorite = Favorite.new
-    @book_comments = @book.book_comments
-    @comment = BookComment.new
   end
 
   def show
     @book = Book.find(params[:id])
-   
+    @new_books = Book.new
     @user = @book.user
     @favorite = Favorite.new
     @favorite_count = Favorite.where(book_id: @book.id).count

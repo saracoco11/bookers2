@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @book = Book.new
     @books = @user.books
-    @user = current_user
+
     @favorite = Favorite.new
     @book_comments = @book.book_comments
     @comment = BookComment.new
